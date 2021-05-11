@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_tree1" model="ir.ui.view">
+        <field name="model">hospital.ticket</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <tree string="Hospital Op" multi_edit="1" sample="1">
+                <field name="patient_card" string="Number" readonly="1" decoration-bf="1"/>
+                <field name="name" string="Name" readonly="1" decoration-bf="1"/>
+                <field name="age" string="Date of Birth" readonly="1"/>
+                <field name="dob" string="Age" readonly="1"/>
+                <field name="gender" string="Gender" readonly="1"/>
+                <field name="blood_group" string="Blood Group" readonly="1"/>
+                <field name="doctor" string="Doctor" readonly="1"/>
+                <field name="date" string="Date" readonly="1"/>
+
+            </tree>
+
+        </field>
+
+    </record>
+    <record id="view_order_kanban" model="ir.ui.view">
+        <field name="model">hospital.ticket</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+
+            <kanban class="o_kanban_mobile">
+                <field name="patient_card" string="Number" readonly="1" decoration-bf="1"/>
+                <field name="name" string="Name" readonly="1" decoration-bf="1"/>
+                <field name="age" string="Date of Birth" readonly="1"/>
+                <field name="dob" string="Age" readonly="1"/>
+                <field name="gender" string="Gender" readonly="1"/>
+                <field name="blood_group" string="Blood Group" readonly="1"/>
+                <field name="doctor" string="Doctor" readonly="1"/>
+                <field name="date" string="Date" readonly="1"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_details">
+                            <strong class="o_kanban_record_title">
+                                <field name="patient_card"/>
+                                <field name="name"/>
+                            </strong>
+                        </div>
+
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="op_action" model="ir.actions.act_window">
+        <field name="name">Patients OP Ticket</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.ticket</field>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+    <menuitem id="op_menu_root"
+              name="OP"
+              parent="hospital_root"
+              action="op_action"
+              sequence="10"/>
+
+    <record id="patientOp_form" model="ir.ui.view">
+        <field name="name">patient.op.form</field>
+        <field name="model">hospital.ticket</field>
+        <field name="arch" type="xml">
+            <form string="patientOp">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight"
+                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_register_payment" type="object" string="Fee Payment" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="patient_card" readonly="1"/>
+                        </h1>
+
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_card" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="name" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="age" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="dob" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="gender" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="blood_group" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </group>
+                        <group>
+                            <field name="doctor">Doctors</field>
+                            <field name="date">Date</field>
+                            <field name="tocken_no">Tocken Number</field>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="fee" widget="monetary">Fee</field>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <!--<record id="op_form" model="ir.ui.view">
+        <field name="name">hospital.op.form</field>
+        <field name="model">hospital.op</field>
+        <field name="arch" type="xml">
+            <form string="patient">
+                <sheet>
+                    <div class="oe_title">
+                        <group>
+                            <group>
+                                <field name="patient_card">Patients Name</field>
+                            </group>
+                        </group>
+                    </div>
+                </sheet>
+
+            </form>
+        </field>
+    </record>-->
+
+</odoo>

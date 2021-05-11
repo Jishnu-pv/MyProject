@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_consultation_tree" model="ir.ui.view">
+        <field name="model">hospital.consultation</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <tree string="Hospital Consultation" multi_edit="1" sample="1">
+                <field name="patient_card"  readonly="1" decoration-bf="1"/>
+                <field name="con_id"  readonly="1" decoration-bf="1"/>
+                <field name="doctor"  readonly="1"/>
+                <field name="department"  readonly="1"/>
+                <field name="date"  readonly="1"/>
+                <field name="disease" readonly="1"/>
+                <field name="Diagnose" readonly="1"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="consultation_action" model="ir.actions.act_window">
+        <field name="name">Consultation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.consultation</field>
+
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+    <menuitem id="consultation_menu_root"
+              name="Consultation"
+              parent="hospital_root"
+              action="consultation_action"
+              sequence="10"/>
+
+    <record id="patientConsultant_form" model="ir.ui.view">
+        <field name="name">patient.consultant.form</field>
+        <field name="model">hospital.consultation</field>
+        <field name="arch" type="xml">
+            <form string="patientConsultant">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="patient_card"/>
+                            <field name="tocken_no"/>
+                            <field name="con_id"/>
+                            <field name="doctor"/>
+                            <field name="department"/>
+                        </group>
+                         <group>
+                             <field name="date"/>
+                             <field name="disease"/>
+                            <field name="Diagnose"/>
+
+                         </group>
+                     </group>
+
+                    <notebook>
+                        <page string="Order Lines">
+                                <field name="appoinment_line">
+                                    <tree editable="bottom">
+                                        <field name="patient_card"/>
+                                        <field name="medicine"/>
+                                        <field name="dose"/>
+                                        <field name="days"/>
+                                        <field name="description"/>
+                                         <field name="cons_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

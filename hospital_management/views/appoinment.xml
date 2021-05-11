@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_appoinment_tree" model="ir.ui.view">
+        <field name="model">hospital.appoinment</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <tree string="Hospital Appoinment" multi_edit="1" sample="1">
+                <field name="patient_card"  readonly="1" decoration-bf="1"/>
+                <field name="name"  readonly="1" decoration-bf="1"/>
+                <field name="tocken_no"  readonly="1" decoration-bf="1"/>
+                <field name="doctor"  readonly="1"/>
+                <field name="department"  readonly="1"/>
+                <field name="date"  readonly="1"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="appoinment_action" model="ir.actions.act_window">
+        <field name="name">Appoinment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.appoinment</field>
+
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+    <menuitem id="appoinment_menu_root"
+              name="Appoinment"
+              parent="hospital_root"
+              action="appoinment_action"
+              sequence="10"/>
+
+
+    <record id="patientAppoinment_form" model="ir.ui.view">
+        <field name="name">patient.appoinement.form</field>
+        <field name="model">hospital.appoinment</field>
+        <field name="arch" type="xml">
+            <form string="patientOp">
+                <header>
+
+                    <field name="state" widget="statusbar"></field>
+
+                    <button name = "action_confirm" type = "object" string="Confirm" class = "oe_highlight"
+                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                         context="{'turn_view_readonly':True}"/>
+                    <button name = "action_conver_op" type = "object" string="Convert to OP" class = "oe_highlight"/>
+                </header>
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+                        <button name='action_confirm1'
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-globe icon" attrs="{'invisible': [('state', 'in', ['draft'])]}"
+                        >
+                            <field name="op_count" widget="statinfo" string="OP"/>
+                        </button>
+                    </div>
+                     <group>
+                         <group>
+                             <field name="patient_card"  attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                             <field name="name"/>
+                             <field name="doctor"/>
+                             <field name="department"/>
+
+                         </group>
+                         <group>
+                             <field name="date"/>
+                             <field name="tocken_no" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                         </group>
+
+
+                     </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

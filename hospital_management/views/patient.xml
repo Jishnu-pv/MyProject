@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_tree" model="ir.ui.view">
+        <field name="model">hospital.patient</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <tree string="Hospital Patients" multi_edit="1" sample="1">
+                <field name="name" string="Number" readonly="1" decoration-bf="1"/>
+                <field name="patient_id" string="Name" readonly="1" decoration-bf="1"/>
+                <field name="dob1" string="Date of Birth" readonly="1"/>
+                <field name="age" string="Age" readonly="1"/>
+                <field name="gender" string="Gender" readonly="1"/>
+                <field name="mobile" string="Mobile" readonly="1"/>
+                <field name="telephone" string="Telephone" readonly="1"/>
+                <field name="blood_group" string="Blood Group" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="patient_form" model="ir.ui.view">
+        <field name="name">hospital.patient.form</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <form string="patient">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id" widget="res_partner_many2one" context="{'show_address': 1}"
+                                   options='{"always_reload": True}'>Patients Name
+                            </field>
+                            <field name="dob1">Date of Birth</field>
+                            <field name="age">Age</field>
+                            <field name="gender">Gender</field>
+                        </group>
+                        <div class="oe_title">
+                            <group>
+                                <field name="mobile">Mobile Phone</field>
+                                <field name="telephone">TelePhone</field>
+                                <field name="blood_group">TelePhone</field>
+                            </group>
+                        </div>
+                    </group>
+                    <notebook>
+                        <page string="Op History">
+                                <field name="order_lines" widget="section_and_note_one2many" mode="tree,kanban">
+                                    <tree editable="bottom">
+                                        <field name="date"/>
+                                        <field name="tocken_no"/>
+                                        <field name="department"/>
+                                    </tree>
+                                </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="patient_action" model="ir.actions.act_window">
+        <field name="name">Patients Card</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a patient
+            </p>
+        </field>
+
+    </record>
+
+    <menuitem id="hospital_root"
+              name="Hospital Management"
+              sequence="10"/>
+    <menuitem id="hospital_patient_root"
+              name="Patients Details"
+              parent="hospital_root"
+              sequence="10"/>
+    <menuitem id="hospital_patient"
+              name="patients Card"
+              parent="hospital_patient_root"
+              action="patient_action"
+              sequence="10"/>
+
+    <!--<record id="patient_action" model="ir.actions.act_window">
+        <field name="name">Patient</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.patient"</field>
+         <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="help" type="html">
+        </field>
+    </record>
+
+
+
+    <menuitem id="patient_menu_root"
+        name="hospital"
+        sequence="10"/>
+
+    <menuitem id="patient_card_menu"
+        name="Patient Card"
+        parent="patient_menu_root"
+        sequence="10"/>
+
+    <menuitem id="patient_card"
+        name="Patient Card"
+        parent="patient_card_menu"
+        sequence="10"/>-->
+
+
+</odoo>
+

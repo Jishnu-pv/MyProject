@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <record model="ir.ui.view" id="dob_form_view">
+              <field name="name">partner.dob</field>
+              <field name="model">res.partner</field>
+              <field name="inherit_id" ref="base.view_partner_form"/>
+              <field name="arch" type="xml">
+                <xpath expr="//field[@name='function']" position="after">
+                        <field name="dob" string="DOB"/>
+                </xpath>
+        </field>
+
+      </record>
+
+    <record model="ir.ui.view" id="dob_form_view1">
+              <field name="name">employee.dob</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hr.view_employee_form"/>
+              <field name="arch" type="xml">
+                   <field name="department_id" position="after">
+                       <field name="fee" string="Fee" attrs="{'invisible': [('job_title', '!=', 'Doctor')]}"/>
+                   </field>
+        </field>
+
+      </record>
+
+
+
+
+</odoo>
